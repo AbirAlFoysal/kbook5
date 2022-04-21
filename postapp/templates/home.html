@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<center><h1>Books</h1></center>
+
+
+<style>
+    .ellipse{
+     word-break: break-word;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     line-height: 16px; /* fallback */
+     max-height: 200px; /* fallback */
+     -webkit-line-clamp: 1; /* number of lines to show */
+     -webkit-box-orient: vertical;
+  }
+
+  </style>
+<center>
+  {% for post in page_obj %}
+  {% include 'post.html' %}
+  {% endfor %}	
+</center>
+
+ {% include 'pagination.html' %} 
+    
+{% endblock %}

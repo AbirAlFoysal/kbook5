@@ -1,0 +1,42 @@
+
+<style media="screen">
+  .ellipse{
+   word-break: break-word;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   line-height: 16px; /* fallback */
+   max-height: 128px; /* fallback */
+   -webkit-line-clamp: 1; /* number of lines to show */
+   -webkit-box-orient: vertical;
+  }
+  </style>
+  
+  <div style="display: inline-box"></div>
+  
+  
+  <div class="card shadow p-3 mb-5 bg-white rounded" style="width:330px; height: 517px; padding: 10px; margin: 20px 20px;">
+    <img class="card-img-top rounded  border border-secondary" src="{{ post.header_image.url }}"
+     alt="Card image cap" height="357px" width="210px" style="">
+    <div class="card-body">
+  
+      <div class="container" style="margin-left:-30px">
+  
+  
+      <h5 class="card-title ellipse" style="margin-top: -15px"><strong>
+        <a href="{% url 'article-detail' post.pk %}" style="font-weight:750;">"{{ post.title }}"</a>    </strong> </h5>
+      <p class="card-title text-muted">
+        <a class="mr-2" style="font-size: 20px; color: #565656; font-weight:550;" href="{% url 'user_posts' user.profile.id %}">
+        {{post.author}}
+      </a></p>
+  
+      <small class="text-muted">
+        {{ post.date_posted|date:"F d, Y" }}
+        </small>
+  
+      <a href="#" class="btn btn-success">Detail</a>
+  </div>
+    </div>
+  </div>
+  
+  
