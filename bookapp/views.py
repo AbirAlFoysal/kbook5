@@ -18,6 +18,7 @@ def bookhome(request):
 
 def all_books(request):
     books = Book.objects.all()
+
     return render(request, 'all_books.html', {'books':books})
 
 def category_detail(request, slug):

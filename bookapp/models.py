@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from users.models import Profile
+
 
 # Create your models here.
 class Category(models.Model):
@@ -8,16 +11,17 @@ class Category(models.Model):
         return self.name
 
 class Book(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length = 100)
     slug = models.SlugField(max_length=100)
     cover_image = models.ImageField(upload_to = 'img', blank = True, null = True)
-    author = models.CharField(max_length=50)
     summary = models.TextField()
     category = models.ManyToManyField(Category, related_name='books')
     pdf = models.FileField(upload_to='pdf')
     recommended_books = models.BooleanField(default=False)
     fiction_books = models.BooleanField(default=False)
     business_books = models.BooleanField(default=False)
+    
 
     def __str__(self):
         return self.title

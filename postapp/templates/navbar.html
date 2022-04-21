@@ -1,14 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark shadow p-3 mb-5 bg-white fixed-top">
   <div class="container-fluid">
     <a class="logo" href="{% url 'home' %}" >
-      <div class="col-lg-1" style="color: #000; font-size:45px;" ><strong>Home</strong></div>
+      <div class="col-lg-1" style="color: #000; font-size:45px;" >
+        <strong>Home</strong></div>
     </a>    
 
     
 
 <div class="float-right" style="margin-right: 5% 0px; display:flex">
-
-
 
   <a class="logo" href="{% url 'bookhome' %}" style="margin: auto">
     <div class="col-lg-1" style="color: #000; font-size:18px;" ><strong>Books</strong></div>
@@ -39,12 +38,13 @@
         {% comment %} <li><a class='dropdown-item' href="{% url 'edit_profile' %}" class='nav-link'>View profile</a></li> {% endcomment %}
 
         {% if user.profile.id %}
-            <li><a class="dropdown-item" href="{% url 'show_profile_page' user.profile.id %}">View profile</a></li> 
 
             <li><a class="dropdown-item" href="{% url 'edit_profile_page' user.profile.id %}">Edit profile</a></li>
             {% else %}
             <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit profile</a></li>
             {% endif %}
+            <li><a class="dropdown-item" href="{% url 'show_profile_page' user.profile.id %}">View profile</a></li> 
+
             <hr>
             <li><a class='dropdown-item' href="{% url 'logout' %}" class='nav-link'>Logout</a></li>
 
