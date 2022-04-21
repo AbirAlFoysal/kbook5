@@ -12,6 +12,7 @@ from django.contrib.auth.views import PasswordChangeView
 from django.views.generic import ListView, CreateView, DetailView
 from postapp.models import Post, Comment
 from .models import Profile
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -69,6 +70,8 @@ class UserRegisterView(generic.CreateView):
 		messages.success(self.request, 'New user was created successfully”')
 		return super().form_valid(form)
 
+
+@csrf_exempt
 def	login_user(request):
 	if request.method == "POST":
 		username = request.POST['username']
@@ -108,12 +111,9 @@ class PasswordsChangeView(PasswordChangeView):
 		return super().form_valid(form)		
 
 
-class UserPostListView(ListView):
-    model = Post
-    template_name = 'registration/user_profile_page.html'  # <app>/<model>_<viewtype>.html
-    context_object_name = 'posts'
- 
 
-    def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('user'))
-        return Post.objects.filter(author=user).order_by('-post_date')
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')
+    

@@ -33,5 +33,6 @@ urlpatterns = [
          ),
          name='password_reset_complete'),
 
+    path('logout', views.logout_user, name = 'logout')
 
 ]

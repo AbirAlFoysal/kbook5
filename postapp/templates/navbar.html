@@ -3,8 +3,23 @@
     <a class="logo" href="{% url 'home' %}" >
       <div class="col-lg-1" style="color: #000; font-size:45px;" ><strong>Home</strong></div>
     </a>    
-<div class="float-right" style="margin-right: 5%;">
+
     
+
+<div class="float-right" style="margin-right: 5% 0px; display:flex">
+
+
+
+  <a class="logo" href="{% url 'bookhome' %}" style="margin: auto">
+    <div class="col-lg-1" style="color: #000; font-size:18px;" ><strong>Books</strong></div>
+  </a>  
+  &nbsp &nbsp &nbsp
+    <a class="logo" href="{% url 'home' %}" style="margin: auto">
+      <div class="col-lg-1" style="color: #000; font-size:18px;" ><strong>Posts</strong></div>
+    </a>   
+    &nbsp &nbsp &nbsp &nbsp
+
+
     <div class="collapse show navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {% if user.is_authenticated %}
@@ -17,9 +32,7 @@
        
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             
-            
-                {% comment %} <li><a class='dropdown-item' href="{% url 'bookpage' %}" class='nav-link'>View Books</a></li> {% endcomment %}
-
+          
         <li><a class='dropdown-item' href="{% url 'add_post' %}" class='nav-link'>Add post</a></li>
         
         {% comment %} <li><a class='dropdown-item' href="{% url 'show_profile_page' user.profile.id %}" class='nav-link'>View profile</a></li> {% endcomment %}
