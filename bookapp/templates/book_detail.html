@@ -23,10 +23,50 @@
                 <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
               </svg>
         </button></a>    </div>
+
+
+
+
+        <form action="{% url  'like_book' book.pk %}" method="POST">
+            {% csrf_token %}
+           {% if user.is_authenticated %} 
+            {% if liked %}
+                <button type="submit", name="book_id", value="{{ book.id }} ", class='btn btn-danger btn-sm'>disLike</button>
+            {% else %}    
+                <button type="submit", name="book_id", value="{{ book.id }} ", class='btn btn-success btn-sm'>Like</button>
+            {% endif %}
+            - {{total_likes}} Likes
+            {% else %}
+            <small>You Must be logged in to like</small>
+            <a href="{% url 'login2' %}" class='nav-link'>Login</a>
+            {% endif %}
+        </form>
+        </br><hr>
+        
+        <div style="margin-bottom: 7em">
+        <h2>Comments ({{book.comments.count}})</h2>
+        {% if not book.comments.all %}
+            no comments yet...
+            <br><hr>
+        {% else %}
+            
+            {% for book in book.comments.all %}
+            
+               <strong >{{comment.id}}. {{comment.name}}</strong> - 
+                       <small class="text-muted"> {{comment.data_added}}</small>
+        
+                <p>{{comment.body}}</p>
+            </br><hr>
+            {% endfor %}    
+        
+        {% endif %} 
+        <a class="btn btn-outline-success" href="{% url 'add_comment' book.pk %}">Add comment</a>
+        </br>
+
+
+
   </div>
-                
-                
-           <br><br><br>
+   <br><br><br>
 
 
 <div class = 'container'>

@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect
-from .models import Book, Category
-from django.contrib.auth.forms import UserCreationForm
-from  .forms import CreateUserForm
+from .models import Book, Category, Comment
+from django.views.generic import CreateView
+# from  .forms import CreateUserForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .forms import CommentForm
+from django.urls import reverse_lazy, reverse
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+
 
 
 # Create your views here.
@@ -36,32 +41,29 @@ def search_book(request):
     searched_books = Book.objects.filter(title__icontains = request.POST.get('name_of_book'))
     return render(request, 'search_book.html', {'searched_books':searched_books})
 
-# def register_page(request):
-#     register_form = CreateUserForm()
-#     if request.method == 'POST':
-#         register_form = CreateUserForm(request.POST)
-#         if register_form.is_valid():
-#             register_form.save()
-#             messages.info(request, "Account Created Successfully!")
-#             return redirect('login')
-           
-#     return render(request, 'register.html', {'register_form': register_form})
 
-# def login_page(request):
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password1')
-#         user = authenticate(request, username = username, password = password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect('home')
-#         else:
-#             messages.info(request, "Invalid Credentials")
-        
-    
-#     return render(request, 'login.html', {})
+class AddCommentView(CreateView):
+	model = Comment
+	form_class = CommentForm
+	template_name = 'add_comment.html'
+	#fields = "__all__"
 
-# def logout_user(request):
-#     logout(request)
-#     return redirect('home')
-    
+
+	def form_valid(self, form):
+		form.instance.book_id = self.kwargs['pk']
+		form.instance.name = self.request.user.username
+		form.instance.return_id = self.kwargs['pk']
+		return super().form_valid(form)
+
+
+def LikeView(request, pk):
+		book = get_object_or_404(Book, id=request.POST.get("book_id"))
+		liked = False
+		if book.likes.filter(id=request.user.id).exists():
+			book.likes.remove(request.user)
+			liked = False
+		else:	
+			book.likes.add(request.user)
+			liked = True
+		return HttpResponseRedirect(reverse('book-detail',args=[str(pk)]))
+
